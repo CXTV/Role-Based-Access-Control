@@ -1,4 +1,4 @@
-import  re
+import re
 from django.shortcuts import render, HttpResponse, redirect
 from rbac import models
 from rbac.service.init_permission import init_permission
@@ -37,8 +37,8 @@ def index(request):
 
     return HttpResponse('欢迎登陆')
 
-def index(request):
 
+def index(request):
     return HttpResponse('欢迎登录')
 
 
@@ -56,4 +56,3 @@ def order(request):
 
 def order_add(request):
     return HttpResponse('添加订单页面')
-

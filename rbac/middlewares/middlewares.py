@@ -23,23 +23,22 @@ class MiddlewareMixin(object):
 class RbacMiddleware(MiddlewareMixin):
     def process_request(self,request):
         current_url = request.path_info
+        #白名单
         for url in settings.VALID_URL:
             if re.match(url,current_url):
                 return None
 
         permission_list = request.session.get('permission_url')
-        # print(permission_list)
-        if permission_list:
-            print(permission_list)
-            print(current_url)
-            flag = False
-            for url in permission_list:
-                regex = '^{0}$'.format(url)
-                print(regex)
-                if re.match(regex, current_url):
-                    flag = True
-                    print(flag)
-                    break
 
-            if not flag:
-                return HttpResponse('无权访问')
+        if not permission_list:
+            return redirect('/login/')
+
+        flag = False
+        for db_url in permission_list:
+            regax = "^{0}$".format(db_url)
+            if re.match(regax, current_url):
+                flag = True
+                break
+
+        if not flag:
+            return HttpResponse('无权访问')
